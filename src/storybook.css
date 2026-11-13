@@ -209,14 +209,6 @@ html{scroll-behavior:auto}
 }
 @media(max-width:390px){.film-title{font-size:2.2rem}.hero-composition{width:clamp(210px,60vw,250px)}.collage-photo{width:36vw}.collage-message{width:54%}.memory-photo{width:82%}}
 @media(prefers-reduced-motion:reduce){.film-scroll-cue{display:none}.film-photo,.film-photo img{will-change:auto!important}.cinematic-journey button{transition:none}}
-.envelope-3d{transform:translateY(64px)}
-.envelope-3d:hover{transform:translateY(60px) rotateX(2deg)}
-.envelope-3d{transform:translateY(118px)}
-.envelope-3d:hover{transform:translateY(114px) rotateX(2deg)}
-.intro-reveal{margin-top:118px}
-@media(max-width:700px){.envelope-3d{transform:translateY(96px)}.envelope-3d:hover{transform:translateY(92px) rotateX(2deg)}}
-.intro-reveal{margin-top:118px}
-.intro-reveal .intro-reveal-line,.intro-reveal .button{position:relative;top:22px}
 @media(prefers-reduced-motion:reduce){
  .memory-composition{position:relative;inset:auto;display:grid;gap:26px;padding:70px 0 36px}
  .memory-frame,.memory-frame-2{position:relative;width:min(100%,620px);height:auto;min-height:350px;grid-template-columns:1fr;grid-template-rows:minmax(220px,1fr) auto;gap:10px;opacity:1!important;visibility:visible!important;transform:none!important}
@@ -237,16 +229,86 @@ html{scroll-behavior:auto}
  .intro-content h1{font-size:clamp(1.55rem,5vw,2.4rem);margin-bottom:6px}
  .intro-hint{font-size:.88rem}
  .envelope-stage{height:144px;margin:6px 0}
- .envelope-3d{width:min(62vw,235px);height:min(36vw,145px);transform:translateY(98px)}
- .envelope-3d:hover{transform:translateY(94px) rotateX(2deg)}
- .intro-reveal{min-height:90px;margin-top:38px}
- .intro-reveal .intro-reveal-line,.intro-reveal .button{top:70px}
+ .envelope-3d{width:min(62vw,235px);height:min(36vw,145px)}
+ .intro-reveal{min-height:90px;margin-top:12px}
+ .intro-reveal .intro-reveal-line,.intro-reveal .button{top:0}
  .intro-footer{display:none}
 }
 @media(max-width:700px) and (max-height:680px){
  .intro-content{width:min(94%,440px);padding:18px 0 20px}
  .intro-content h1{max-width:100%;font-size:clamp(1.55rem,6vw,2.05rem)}
  .envelope-stage{height:130px}
- .envelope-3d{width:min(60vw,205px);height:130px;transform:translateY(88px)}
- .envelope-3d:hover{transform:translateY(84px) rotateX(2deg)}
+ .envelope-3d{width:min(60vw,205px);height:130px}
+}
+
+/* Phone layouts use natural document flow; desktop retains the pinned film treatment. */
+.hero-caption-card{display:contents}
+@media(max-width:759px){
+ .cinematic-intro{min-height:100svh;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);}
+ .intro-content{width:min(92%,500px);padding:24px 0 22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
+ .intro-kicker{margin-bottom:clamp(12px,2.2svh,20px)}
+ .intro-content h1{font-size:clamp(1.9rem,8.4vw,2.8rem);line-height:1.12;margin-bottom:9px}
+ .intro-hint{max-width:34ch;line-height:1.5}
+ .envelope-stage{height:clamp(150px,23svh,205px);margin:8px 0 0}
+ .envelope-3d{transform:translateY(0)}
+ .envelope-3d:hover{transform:translateY(-3px)}
+ .intro-reveal{min-height:0;margin:14px auto 0;width:100%}
+ .intro-reveal .intro-reveal-line,.intro-reveal .button{top:0}
+ .intro-reveal h2{max-width:34ch;line-height:1.42;margin-bottom:14px}
+ .intro-footer{bottom:max(12px,env(safe-area-inset-bottom));font-size:.43rem}
+
+ .film-sequence .film-stage{height:auto;min-height:100svh;overflow:hidden;padding:62px 18px 52px}
+ .film-sequence .film-scene-content{width:100%;min-height:calc(100svh - 114px);justify-content:center;padding:0}
+ .film-sequence .film-eyebrow{position:relative;top:auto;left:auto;right:auto;margin:0 0 12px}
+ .film-sequence .film-title,.film-memories .film-title,.film-reasons .film-title{position:relative;top:auto;left:auto;right:auto;max-width:100%;font-size:clamp(2.15rem,9vw,3rem);line-height:1.08}
+
+ .film-hero .film-stage{min-height:100svh}
+ .film-hero .film-scene-content{min-height:calc(100svh - 114px);padding:0}
+ .hero-composition{width:min(82vw,350px);aspect-ratio:auto;height:auto;min-height:0;margin:22px auto 0;display:flex;flex-direction:column;gap:0}
+ .hero-photo{position:relative;inset:auto;width:100%;height:clamp(300px,43svh,440px);aspect-ratio:auto;transform:rotate(-1deg)}
+ .hero-photo>img,.hero-photo>.film-photo-fallback{height:calc(100% - 20px);object-fit:contain}
+ .hero-caption-card{position:relative;z-index:3;display:block;margin:12px 2px 0;padding:12px 14px 13px;text-align:left;background:#f8f0e3;color:#493638;border:1px solid #c6a46a;box-shadow:0 8px 22px #140d103d}
+ .hero-caption{position:static;width:auto;margin:0;color:#493638;text-align:left;font:italic 1.04rem/1.42 'Playfair Display',serif}
+ .hero-margin-note{position:static;display:block;max-width:none;margin:0 0 5px;writing-mode:horizontal-tb;text-align:left;color:#713c48;font:1rem 'Caveat',cursive}
+
+ .film-memories .film-stage,.film-collage .film-stage,.film-reasons .film-stage{height:auto;min-height:100svh;overflow:visible}
+ .film-memories .film-scene-content,.film-collage .film-scene-content,.film-reasons .film-scene-content{min-height:0;justify-content:flex-start;padding:0}
+ .memory-composition{position:relative;inset:auto;width:100%;display:grid;gap:18px;margin:24px auto 0;pointer-events:auto}
+ .memory-frame,.memory-frame-2{position:relative;inset:auto;width:100%;height:auto;min-height:0;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto;gap:7px;opacity:1;visibility:visible;transform:none;will-change:auto}
+ .memory-photo{height:clamp(220px,36svh,340px);width:min(82%,340px);margin:0 auto;padding:8px 8px 22px}
+ .memory-copy{width:min(100%,430px);padding:5px 8px 8px;text-align:center;color:#fff5e7}
+ .memory-copy h3{font-size:1.4rem;margin:5px 0 7px}
+ .memory-copy p{font-size:.94rem;line-height:1.55}
+ .memory-scroll-note{position:relative;inset:auto;margin:18px 0 0;text-align:center}
+
+ .collage-composition{width:100%;height:auto;margin:24px auto 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+ .collage-photo,.collage-photo-0,.collage-photo-1,.collage-photo-2,.collage-photo-3{position:relative;inset:auto;width:100%;aspect-ratio:.78;transform:rotate(0);}
+ .collage-photo:nth-child(even){margin-top:14px}
+ .collage-polaroid{height:100%;padding:7px 7px 22px}
+ .collage-message{position:relative;inset:auto;grid-column:1/-1;width:100%;min-height:0;margin:4px 0 0;padding:16px 18px;transform:none;text-align:left}
+
+ .film-reasons .film-title{margin-bottom:8px}
+ .reasons-sequence{width:100%;min-height:0;margin:24px auto 0;display:grid;gap:12px}
+ .reason-line{position:relative;inset:auto;min-height:0;display:grid;grid-template-columns:30px minmax(0,1fr) 14px;align-items:start;gap:9px;padding:15px 14px;border:1px solid #d7ba8560;background:linear-gradient(135deg,#f5ead8,#e9d7c2);color:#382b2c;box-shadow:0 7px 20px #160e1324}
+ .reason-line>span{align-self:start;padding:3px 0 0;color:#8b624b;font-size:.86rem}
+ .reason-line p{margin:0;color:#382b2c;font:400 clamp(1.05rem,4.6vw,1.3rem)/1.48 'Playfair Display',serif;letter-spacing:0;text-wrap:pretty;text-shadow:none}
+ .reason-line i{align-self:start;padding:5px 0 0;color:#a57d43}
+ .reasons-scroll-note{position:relative;inset:auto;margin:20px 0 0;text-align:center;color:#ead7bd;font-size:1rem}
+
+ .film-letter .film-stage{min-height:0;padding:64px 16px 42px}
+ .film-letter .film-scene-content{min-height:0}
+ .film-letter .film-title{margin-bottom:10px}
+ .quiet-letter{margin-top:10px}
+ .film-extra{min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:56px 17px;background:radial-gradient(ellipse at 50% 42%,#fffaf2,#f4eadb 57%,#ead9c4)}
+ .film-extra .surprise-section{width:100%;padding:0}
+ .film-extra .surprise-section .section-heading{margin-bottom:26px}
+ .film-extra .surprise-section .section-heading .eyebrow{color:#795a51}
+ .film-extra .surprise-section .section-heading h2{color:#542b39}
+}
+@media(max-width:390px){
+ .hero-composition{width:min(84vw,320px)}
+ .hero-photo{height:clamp(275px,40svh,380px)}
+ .reason-line{grid-template-columns:24px minmax(0,1fr) 10px;padding:13px 11px;gap:7px}
+ .reason-line p{font-size:1.04rem}
+ .intro-content{width:min(94%,420px)}
 }

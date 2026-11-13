@@ -69,6 +69,29 @@ export default function CinematicJourney({ onReplay }) {
     const mm = gsap.matchMedia();
     mm.add({ motion: '(prefers-reduced-motion: no-preference)', desktop: '(min-width: 760px)' }, ({ conditions }) => {
       const scenes = gsap.utils.toArray('[data-film-chapter]', root.current);
+      if (!conditions.desktop) {
+        scenes.forEach((scene) => {
+          if (scene.classList.contains('film-reasons')) {
+            const reasons = scene.querySelectorAll('.reason-line');
+            gsap.fromTo(reasons, { autoAlpha: 0, y: 16 }, {
+              autoAlpha: 1, y: 0, duration: .5, stagger: .09, ease: 'power2.out',
+              scrollTrigger: { trigger: scene, start: 'top 76%', toggleActions: 'play none none reverse' },
+            });
+            return;
+          }
+          const content = scene.querySelector('.film-scene-content');
+          if (content) gsap.fromTo(content, { autoAlpha: 0, y: 14 }, {
+            autoAlpha: 1, y: 0, duration: .65, ease: 'power2.out',
+            scrollTrigger: { trigger: scene, start: 'top 80%', toggleActions: 'play none none reverse' },
+          });
+        });
+        const finale = root.current.querySelector('#birthday');
+        if (finale) ScrollTrigger.create({ trigger: finale, start: 'top 68%', onEnter: () => setChapter(5), onEnterBack: () => setChapter(5) });
+        const progressLine = root.current.querySelector('.film-progress span');
+        ScrollTrigger.create({ trigger: root.current, start: 'top top', end: 'bottom bottom', onUpdate: self => gsap.set(progressLine, { scaleY: self.progress }) });
+        requestAnimationFrame(() => ScrollTrigger.refresh());
+        return;
+      }
       scenes.forEach((scene, index) => {
         const stage = scene.querySelector('.film-stage');
         const pin = scene.hasAttribute('data-pin');
@@ -95,7 +118,7 @@ export default function CinematicJourney({ onReplay }) {
         } else if (scene.classList.contains('film-reasons')) {
           const reasons=scene.querySelectorAll('.reason-line');
           timeline.fromTo(q('.film-eyebrow'),{autoAlpha:0,y:12},{autoAlpha:1,y:0,duration:.35}).fromTo(q('.film-title'),{autoAlpha:0,y:12},{autoAlpha:1,y:0,duration:.5},'-.1');
-          reasons.forEach((reason,i)=>{timeline.fromTo(reason,{autoAlpha:0,y:24,scale:.97},{autoAlpha:1,y:0,scale:1,duration:.55},i?'>-.12':'+=.15');if(i<reasons.length-1)timeline.to(reason,{autoAlpha:.16,y:-8,scale:.98,duration:.38},'+=.45')});
+          reasons.forEach((reason,i)=>{timeline.fromTo(reason,{autoAlpha:0,y:24,scale:.97},{autoAlpha:1,y:0,scale:1,duration:.55},i?'>-.12':'+=.15');if(i<reasons.length-1)timeline.to(reason,{autoAlpha:0,y:-8,scale:.98,duration:.38},'+=.45')});
         } else if (scene.classList.contains('film-letter')) {
           timeline.fromTo(q('.film-title'),{autoAlpha:0,y:10},{autoAlpha:1,y:0,duration:.55}).fromTo(q('.letter-scene'),{autoAlpha:0,y:12},{autoAlpha:1,y:0,duration:.7},'-.15');
         } else if (q('.film-title')) timeline.fromTo(q('.film-title'),{autoAlpha:0,y:10},{autoAlpha:1,y:0,duration:.55});
@@ -118,7 +141,7 @@ export default function CinematicJourney({ onReplay }) {
     <div className="film-scroll-cue"><ArrowDown size={14}/><span>scroll to wander</span></div>
 
     <FilmChapter number="1" eyebrow="CHAPTER 01 · A LITTLE WORLD" title={birthday.cinematic.herWorldTitle} kind="film-hero" id="her-world" pin>
-      <div className="hero-composition"><FilmPhoto item={birthday.herStory[0]} className="hero-photo" hideCaption/><p className="hero-caption">{birthday.herStory[0]?.caption || '[A LITTLE THING I LOVE ABOUT YOU]'}</p><span className="hero-margin-note">{birthday.herStory[0]?.note}</span></div>
+      <div className="hero-composition"><FilmPhoto item={birthday.herStory[0]} className="hero-photo" hideCaption/><div className="hero-caption-card"><span className="hero-margin-note">{birthday.herStory[0]?.note}</span><p className="hero-caption">{birthday.herStory[0]?.caption || '[A LITTLE THING I LOVE ABOUT YOU]'}</p></div></div>
     </FilmChapter>
 
     <section className="photo-album" id="ananya-photos" aria-labelledby="photo-album-title">
@@ -155,7 +178,7 @@ export default function CinematicJourney({ onReplay }) {
     </FilmChapter>
     <section className="voice-interlude" aria-label="A transition to a personal voice message"><p>{birthday.cinematic.voiceTransition}</p><span>✦</span></section>
     <PersonalVoiceMessage src={birthday.audioPath}/>
-    <section className="film-extra" data-film-chapter="5" id="surprise-film"><p className="film-eyebrow">ONE MORE LITTLE THING</p><SecretGiftSection/></section>
+    <section className="film-extra" data-film-chapter="5" id="surprise-film"><SecretGiftSection/></section>
     <div className="finale-transition" aria-hidden="true"><span>and now, a wish for you</span></div>
     <div className="film-finale"><BirthdayFinaleSection onReplay={onReplay}/></div>
     <footer className="film-end"><span>✦</span><p>A little world, made for you.</p><button type="button" onClick={onReplay}><RotateCcw size={14}/>begin again</button></footer>
